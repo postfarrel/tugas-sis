@@ -59,7 +59,11 @@ class EmployeeListState extends State<EmployeeList> {
                 size: 26.0,
               ),
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 25),
+            child: 
+            ),)
         ],
       ),
       body: ListView.builder(
