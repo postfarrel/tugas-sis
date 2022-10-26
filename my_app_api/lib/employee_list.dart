@@ -60,6 +60,17 @@ class EmployeeListState extends State<EmployeeList> {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: GestureDetector(
+              onTap: () {
+                showSearch(context: context, delegate: CustomSearchDelegate());
+              },
+              child: const Icon(
+                Icons.search,
+                size: 26,),
+            ),
+          )
         ],
       ),
       body: ListView.builder(
@@ -74,4 +85,11 @@ class EmployeeListState extends State<EmployeeList> {
       ),
     );
   }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  List<String> searchTerms = // tarik nama?;
+
+  @override 
+  List<Widget>? //masing kurang ngerti
 }
