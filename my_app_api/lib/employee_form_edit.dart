@@ -45,146 +45,146 @@ class _EmployeeFormEditState extends State<EmployeeFormEdit> {
     address.text = employee[0].address;
     gender = employee[0].gender;
     update_id = employee[0].id;
+  }
 
-    @override
-    Widget build(BuildContext context) {
-      final args = ModalRoute.of(context)?.settings.arguments as List<String>;
-      selectIdEmployee(args[0]);
+  @override
+  Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as List<String>;
+    selectIdEmployee(args[0]);
 
-      return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        appBar: AppBar(
-          title: const Text("Employee Form Edit"),
-          backgroundColor: Colors.indigo,
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextField(
-                controller: name,
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        title: const Text("Employee Form Edit"),
+        backgroundColor: Colors.indigo,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+              controller: name,
+              keyboardType: TextInputType.text,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Full Name',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: DropdownButtonFormField(
+              decoration: const InputDecoration(
+                filled: false,
+                border: InputBorder.none,
+              ),
+              value: gender,
+              onChanged: (String? newValue) {
+                if (kDebugMode) {
+                  print(newValue);
+                }
+
+                setState(() {
+                  gender = newValue!;
+                });
+              },
+              items: <String>['Male', 'Female']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                    value: value, child: Text(value));
+              }).toList(),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+                controller: birthday,
                 keyboardType: TextInputType.text,
+                maxLines: 1,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Full Name',
+                  hintText: "Birthday",
                 ),
+                onTap: () {
+                  showDialogPicker(context);
+                }),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+              controller: phone,
+              keyboardType: TextInputType.phone,
+              maxLines: 1,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Phone Number",
               ),
+              onTap: () {
+                showDialogPicker(context);
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: DropdownButtonFormField(
-                decoration: const InputDecoration(
-                  filled: false,
-                  border: InputBorder.none,
-                ),
-                value: gender,
-                onChanged: (String? newValue) {
-                  if (kDebugMode) {
-                    print(newValue);
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+              controller: email,
+              keyboardType: TextInputType.emailAddress,
+              maxLines: 1,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Email Address",
+              ),
+              onTap: () {
+                showDialogPicker(context);
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+              controller: address,
+              maxLines: 4,
+              minLines: 3,
+              keyboardType: TextInputType.multiline,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Address",
+              ),
+              onTap: () {
+                showDialogPicker(context);
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: SizedBox(
+              width: double.infinity,
+              height: 45,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen, elevation: 0),
+                onPressed: () async {
+                  bool updateStatus = await ds.updateId(
+                      'name~email',
+                      name.text + "~" + email.text,
+                      '63476b2099b6c11c094bd508',
+                      'office',
+                      'employee',
+                      '63476cea99b6c11c094bd5eb',
+                      update_id);
+
+                  if (updateStatus) {
+                    Navigator.pop(context, true);
                   }
-
-                  setState(() {
-                    gender = newValue!;
-                  });
                 },
-                items: <String>['Male', 'Female']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                      value: value, child: Text(value));
-                }).toList(),
+                child: const Text("UDPDATE"),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextField(
-                  controller: birthday,
-                  keyboardType: TextInputType.text,
-                  maxLines: 1,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Birthday",
-                  ),
-                  onTap: () {
-                    showDialogPicker(context);
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextField(
-                controller: phone,
-                keyboardType: TextInputType.phone,
-                maxLines: 1,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Phone Number",
-                ),
-                onTap: () {
-                  showDialogPicker(context);
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextField(
-                controller: email,
-                keyboardType: TextInputType.emailAddress,
-                maxLines: 1,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Email Address",
-                ),
-                onTap: () {
-                  showDialogPicker(context);
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextField(
-                controller: address,
-                maxLines: 4,
-                minLines: 3,
-                keyboardType: TextInputType.multiline,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Address",
-                ),
-                onTap: () {
-                  showDialogPicker(context);
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.lightGreen, elevation: 0),
-                  onPressed: () async {
-                    bool updateStatus = await ds.updateId(
-                        'name~email',
-                        name.text + "~" + email.text,
-                        '63476b2099b6c11c094bd508',
-                        'office',
-                        'employee',
-                        '63476cea99b6c11c094bd5eb',
-                        update_id);
-
-                    if (updateStatus) {
-                      Navigator.pop(context, true);
-                    }
-                  },
-                  child: const Text("UDPDATE"),
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    }
+          )
+        ],
+      ),
+    );
   }
 
   void showDialogPicker(BuildContext context) {
