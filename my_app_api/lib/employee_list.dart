@@ -64,11 +64,12 @@ class EmployeeListState extends State<EmployeeList> {
             padding: const EdgeInsets.only(right: 20),
             child: GestureDetector(
               onTap: () {
-                showSearch(context: context, delegate: CustomSearchDelegate());
+                showSearch(context: context, delegate: CustomSearchDelegate);
               },
               child: const Icon(
                 Icons.search,
-                size: 26,),
+                size: 26,
+              ),
             ),
           )
         ],
@@ -88,8 +89,32 @@ class EmployeeListState extends State<EmployeeList> {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
-  List<String> searchTerms = // tarik nama?;
+  DataService ds = DataService();
 
-  @override 
-  List<Widget>? //masing kurang ngerti
+  List data = [];
+  List<EmployeeModel> employee = [];
+
+  selectAllEmployee() async {
+    data = jsonDecode(await ds.selectAll('63476b2099b6c11c094bd508', 'office',
+        'employee', '63476cea99b6c11c094bd5eb'));
+    employee = data.map((e) => EmployeeModel.fromJson(e)).toList();
+
+    Widget buildResults(BuildContext context) {
+      List<String> matchQuery = [];
+      for (var emp in employee) {
+        if (emp.name.toLowerCase().contains(query.toLowerCase())) {
+          matchQuery.add(emp.name);
+        }
+        return ListView.builder(
+          itemCount: matchQuery.length,
+          itemBuilder: (context, index) {
+            var result = matchQuery[index];
+            return ListTile(
+              title: Text(result),
+            );
+          },
+        );
+      }
+    }
+  }
 }
