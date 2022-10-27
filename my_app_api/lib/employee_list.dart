@@ -103,10 +103,12 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     List<String> matchQuery = [];
+
     for (var emp in employee) {
       if (emp.name.toLowerCase().contains(query.toLowerCase())) {
         matchQuery.add(emp.name);
       }
+
       return ListView.builder(
         itemCount: matchQuery.length,
         itemBuilder: (context, index) {
