@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -28,11 +29,12 @@ class EmployeeListState extends State<EmployeeList> {
     setState(() {
       employee = employee;
     });
+  }
 
-    if (kDebugMode) {
-      print(employee.length);
-      print(data);
-    }
+  FutureOr reloadDataEmployee(dynamic value) {
+    setState(() {
+      selectAllEmployee();
+    });
   }
 
   @override
@@ -79,9 +81,12 @@ class EmployeeListState extends State<EmployeeList> {
         itemBuilder: (context, index) {
           final item = employee[index];
           return ListTile(
-            title: Text(item.name),
-            subtitle: Text(item.birthday),
-          );
+              title: Text(item.name),
+              subtitle: Text(item.birthday),
+              onTap: () {
+                Navigator.pushNamed(context, 'employee_detail',
+                    arguments: [item.id]).then(reloadDataEmployee);
+              });
         },
       ),
     );
