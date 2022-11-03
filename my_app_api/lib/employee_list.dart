@@ -60,7 +60,7 @@ class EmployeeListState extends State<EmployeeList> {
               ),
             ),
           ),
-          Padding(
+          /*Padding(
             padding: const EdgeInsets.only(right: 20),
             child: GestureDetector(
               onTap: () {
@@ -71,7 +71,7 @@ class EmployeeListState extends State<EmployeeList> {
                 size: 26,
               ),
             ),
-          )
+          )*/
         ],
       ),
       body: ListView.builder(
@@ -88,7 +88,7 @@ class EmployeeListState extends State<EmployeeList> {
   }
 }
 
-class CustomSearchDelegate extends SearchDelegate {
+/*class CustomSearchDelegate extends SearchDelegate {
   DataService ds = DataService();
 
   List data = [];
@@ -120,4 +120,4 @@ class CustomSearchDelegate extends SearchDelegate {
       );
     }
   }
-}
+}*/
